@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalPathApi::class)
-
 import com.intellij.psi.tree.IElementType
 import me.omico.elucidator.addClass
 import me.omico.elucidator.addEnum
@@ -16,6 +14,7 @@ import kotlin.io.path.readText
 import kotlin.io.path.walk
 import kotlin.io.path.writeText
 
+@OptIn(ExperimentalPathApi::class)
 public fun main() {
     val keywords = KtTokens.KEYWORDS.types.map(IElementType::toString)
     val softKeywords = KtTokens.SOFT_KEYWORDS.types.map(IElementType::toString)
@@ -40,7 +39,6 @@ public fun main() {
     }
     outputDirectory.resolve("test").walk()
         .filter { it.name == "SoftKeywords.kt" }
-        .filter { it.parent.name != "enums" }
         .forEach { file ->
             file.readText()
                 .replace("`", "")
